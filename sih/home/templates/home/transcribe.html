@@ -1,0 +1,16 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %}
+Transcribe
+{% endblock title %}
+
+
+{% block body %}
+<form action="/transcribe" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p>File<br></p>
+    <input type="file" name="file" id="file" /><br>
+    <input type="submit" />
+</form>
+{% endblock body %}
