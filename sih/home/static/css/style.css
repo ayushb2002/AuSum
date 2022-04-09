@@ -54,6 +54,7 @@ body
     text-align: right;
     font-weight:500;
     color: white;
+    padding-left: 1.5rem;
 
 }
 
@@ -157,7 +158,7 @@ body
 
 .box
 {
-    height: 12rem;
+    min-height: 12rem;
     border-radius: 1rem;
     background-color: #F4D03F;
     text-align: center;
@@ -182,6 +183,25 @@ body
 
 }
 
+.boxLink
+{
+    color: white;
+    text-decoration: none;
+}
+
+.boxLink:hover
+{
+    color: black;
+}
+
+.boxCon
+{
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    padding-top: 1rem;
+}
+
 .con2
 {
     margin: 2rem;
@@ -195,7 +215,56 @@ body
     font-family: 'Rubik Moonrocks', cursive;
 }
 
-#id_file
+
+.r1
 {
-    font-size: 1rem;
+    height: 10vh;
+}
+
+.but
+{
+    font-size: 1.25rem;
+    font-weight: 600;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    background-color: #F4D03F;
+}
+
+.but:hover
+{
+    font-size: 1.25rem;
+    font-weight: 600;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    background-color: #F7DC6F;
+}
+
+.formtable tbody tr td input
+{
+    font-size: 1.25rem;
+    font-family: 'Poppins', sans-serif;
+    border: none;
+
+}
+
+.formtable tbody tr th label
+{
+    font-size: 1.5rem;
+    margin: 0 2rem;
+
+}
+
+.c2
+{
+  padding-left: 5rem;
+    
+}
+
+.M
+{
+    font-size: 4rem;
 }

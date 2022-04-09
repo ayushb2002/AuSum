@@ -12,21 +12,26 @@ Transcribe
         <div>Transcribe audio file</div>
     </div>
 
+    <div class="row r1">
+
+    </div>
+
     <div class="row">
         <div class="col-lg-4">
 
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-4 c2">
 
             <div class="d-flex flex-row">
                 {% if form %}
                     <div class="d-flex flex-column justify-content-evenly align-items-center">
-                  `      <form action="/transcribe" method="post" enctype="multipart/form-data">
+                       <form action="/transcribe" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
-                            <table>
+                            <table class="formtable">
                                 {{ form.as_table }}
                             </table>
-                            <input type="submit" value="Transcribe" />
+                            <br>
+                            <input type="submit" value="Transcribe" class="but"/>
                         </form>
                     </div>
                 {% endif %}
