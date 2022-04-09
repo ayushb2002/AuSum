@@ -7,22 +7,37 @@ Transcribe
 
 
 {% block body %}
-<div class="d-flex flex-row">
-    {% if form %}
-        <div class="d-flex flex-column justify-content-evenly align-items-center">
-            <form action="/transcribe" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <table>
-                    {{ form.as_table }}
-                </table>
-                <input type="submit" value="Transcribe" />
-            </form>
+<div class="container-fluid">
+    <div class="row tHead">
+        <div>Transcribe audio file</div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4">
+
         </div>
-    {% endif %}
-    {% if result %}
-        <div class="d-flex flex-column">
-            <p>{{ result }}</p>
+        <div class="col-lg-4">
+
+            <div class="d-flex flex-row">
+                {% if form %}
+                    <div class="d-flex flex-column justify-content-evenly align-items-center">
+                        <form action="/transcribe" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <table>
+                                {{ form.as_table }}
+                            </table>
+                            <input type="submit" value="Transcribe" />
+                        </form>
+                    </div>
+                {% endif %}
+                {% if result %}
+                    <div class="d-flex flex-column">
+                        <p>{{ result }}</p>
+                    </div>
+                {% endif %}
+            </div>
         </div>
-    {% endif %}
+    </div>
 </div>
+
 {% endblock body %}
