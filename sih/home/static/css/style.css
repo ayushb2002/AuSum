@@ -148,11 +148,26 @@ body
 .footerStyle
 {
     background-color: black;
-    height: 8rem;
-}
-.f1
-{
+    height: auto;
     color: white;
+    font-family: 'Poppins', sans-serif;
+}
+
+.quick-links
+{
+    list-style-type:square;
+}
+
+.quick-links li a
+{
+    text-decoration: none;
+    color: white;
+}
+
+.quick-links li a:hover
+{
+    cursor: pointer;
+    color: wheat;
 }
 
 .box
@@ -198,4 +213,17 @@ body
 #id_file
 {
     font-size: 1rem;
+}
+
+.txtForSummary
+{
+    width: 100%;
+    height: 70vh;
+    resize: none;
+    padding: none;
+}
+
+.summaryText
+{
+    width: 100%;
 }

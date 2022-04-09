@@ -1,0 +1,52 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %}
+Generate Notes
+{% endblock title %}
+
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6 py-3 px-5">
+
+            <h3>Text goes here!</h3>
+
+            <form action="{% url 'loadNotes' %}" method="GET">
+                {% csrf_token %}
+                <div class="form-group m-3">
+                    <label for="txt">Text for notes generation - </label>
+                    <textarea name="txtarea" class="txtForSummary form-control" required>
+                        {% if data %}
+                            {{result}}
+                        {% endif %}
+                    </textarea>
+                </div>
+                <div class="form-group m-3">
+                    <button class="btn btn-outline-warning" type="submit" >Generate Notes</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-6 py-3 px-5">
+
+            <h3 class="mb-5">Notes generated here!</h3>
+            {% if notes %}
+
+            <p class="summaryText">
+                <ul>
+                    {% for items in content %}
+                    <li>{{items}}</li>
+                    {% endfor %}
+                </ul>
+            </p>
+
+            {% else %}
+
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum itaque expedita necessitatibus quidem veniam incidunt, provident facilis ab tempora sed accusamus dolores porro aperiam numquam minima quaerat quasi ipsum officiis.</p>
+
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock body %}

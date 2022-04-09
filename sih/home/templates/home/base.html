@@ -27,7 +27,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light navBg ">
         <div class="container-fluid">
-          <a class=" NAV navbar-brand" style="font-size:1.5em ;color: #273746" href="#">AuSum</a>
+          <a class=" NAV navbar-brand" style="font-size:1.5em ;color: #273746" href="{% url 'index' %}">AuSum</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -39,16 +39,11 @@
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'transcribe' %}">Transcribe</a>
               </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Dropdown
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'summarize' %}">Summarize</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'notes' %}">Generate Notes</a>
               </li>
             </ul>
           </div>
@@ -66,17 +61,25 @@
     
 <footer class="footerStyle">
   <div class="row">
-    <div class="col-lg-4">
-
+    <div class="col-lg-4 col-sm-12 h-100 text-center p-5">
+      <h1 class="mt-4" style="color:wheat;">AuSum</h1>
+      <br>
+      <h5>Making summarizing awesome!</h5>
     </div>
-    <div class="col-lg-4">
-
+    <div class="col-lg-4 col-sm-12 h-100 p-5">
+      <h4 style="color:wheat;">Quick Navigation</h4>
+      <hr style="color:yellow;">
+      <ul class="quick-links">
+        <li class="my-2"><a href="{% url 'index' %}">Home</a></li>
+        <li class="my-2"><a href="{% url 'transcribe' %}">Transcribe</a></li>
+        <li class="my-2"><a href="{% url 'summarize' %}">Summarize</a></li>
+      </ul>
     </div>
-    <div class="col-lg-4 f1">
-      <div>
-        AuSum<br>
-        Audio to notes maker
-      </div>
+    <div class="col-lg-4 col-sm-12 h-100 p-5">
+        <h4 style="color:wheat;">About AuSum</h4>
+        <hr style="color:yellow;">
+        <p> Your personal audio-to-notes converter application to keep you ahead of others. <br><br>
+        Save time using this tool and save your notes easily.</p>
     </div>
 
 </footer>
