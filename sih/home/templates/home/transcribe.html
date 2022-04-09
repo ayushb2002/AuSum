@@ -24,7 +24,7 @@ Transcribe
 
             <div class="d-flex flex-row">
                 {% if form %}
-                    <div class="d-flex flex-column justify-content-evenly align-items-center">
+                    <div class="d-flex flex-column justify-content-evenly align-items-center text-center">
                        <form action="/transcribe" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             <table class="formtable">

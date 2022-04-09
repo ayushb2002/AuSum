@@ -1,0 +1,48 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %}
+Summarize text
+{% endblock title %}
+
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6 py-3 px-5">
+
+            <h3>Summarize your text here!</h3>
+
+            <form action="{% url 'loadSummary' %}" method="GET">
+                {% csrf_token %}
+                <div class="form-group m-3">
+                    <label for="txt">Text to be summarized - </label>
+                    <textarea name="txtarea" class="txtForSummary form-control" required>
+                        {% if data %}
+                            {{result}}
+                        {% endif %}
+                    </textarea>
+                </div>
+                <div class="form-group m-3">
+                    <button class="btn btn-outline-warning" type="submit" >Summarize</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-6 py-3 px-5">
+
+            <h3 class="mb-5">Summarized text goes here!</h3>
+            {% if summary %}
+
+            <p class="summaryText">
+                {{content}}
+            </p>
+
+            {% else %}
+
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum itaque expedita necessitatibus quidem veniam incidunt, provident facilis ab tempora sed accusamus dolores porro aperiam numquam minima quaerat quasi ipsum officiis.</p>
+
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock body %}

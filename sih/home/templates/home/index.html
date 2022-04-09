@@ -101,7 +101,7 @@ Welcome
 
         <div class="col-lg-2 box">
             <div class="boxHead">
-                Summarize
+                <a class="boxLink" href="{% url 'summarize' %}">Summarize</a>
             </div>
             <div>
                 <i class="fa fa-pencil fa-3x p-4" aria-hidden="true"></i>
@@ -112,12 +112,10 @@ Welcome
         </div>
         <div class="col-lg-2 box">
             <div class="boxHead">
-                About
+                <a class="boxLink" href="{% url 'notes' %}">Generate Notes</a>
             </div>
-            <div class="boxCon">
-                AuSum is a step towards<br>
-                the automation of note <br>
-                making from audio
+            <div >
+                <i class="fa fa-clipboard fa-3x p-4" aria-hidden="true"></i>
                 
             </div>
         </div>
