@@ -13,7 +13,7 @@ Generate Notes
 
             <h3>Text goes here!</h3>
 
-            <form action="{% url 'loadNotes' %}" method="GET">
+            <form action="{% url 'loadNotes' %}" method="POST">
                 {% csrf_token %}
                 <div class="form-group m-3">
                     <label for="txt">Text for notes generation - </label>

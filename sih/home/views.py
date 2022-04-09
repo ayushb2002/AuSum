@@ -3,10 +3,6 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 
-from google.cloud import speech
-
-from dotenv import load_dotenv
-
 from .forms import UploadForm
 
 import os
@@ -18,7 +14,9 @@ import nltk
 import re
 from nltk.corpus import stopwords
 
-load_dotenv("../../")
+import librosa
+import torch
+from transformers import Wav2Vec2ForCTC, Wav2Vec2Tokenizer
 
 def generateSummary(para, n=5):
   sent_list = nltk.sent_tokenize(para)
@@ -133,7 +131,8 @@ def transcribe(request):
         uploadForm = UploadForm()
         return render(request, "home/transcribe.html", {"form": uploadForm})
     else:
-        client = speech.SpeechClient()
+        tokenizer = Wav2Vec2Tokenizer.from_pretrained('facebook/wav2vec2-base-960h')
+        model = Wav2Vec2ForCTC.from_pretrained('facebook/wav2vec2-base-960h')
         form = UploadForm(request.POST, request.FILES)
         if (not form.is_valid()):
             return render(request, "home/error.html", {"form": form})
@@ -143,19 +142,12 @@ def transcribe(request):
             filename = fs.save(file.name, file)
             file_url = fs.url(filename)
             audioFile = None
-            with fs.open("D:\\FullStackDevelopment\\sih_aiml\\sih"+file_url, 'rb') as audioFileObj:
-                audioFile = audioFileObj.read()
-            audio = speech.RecognitionAudio(content=audioFile)
-            config = speech.RecognitionConfig(
-                enable_automatic_punctuation=True,
-                sample_rate_hertz=48000,
-                language_code="en-US"
-            )
-
-            response = client.recognize(config=config, audio=audio)
-            spresults = ""
-            for result in response.results:
-                spresults+=result.alternatives[0].transcript
+            speech,rate = librosa.load("D:\\FullStackDevelopment\\sih_aiml\\sih"+file_url,sr=16000)
+            
+            ip_v = tokenizer(speech, return_tensors='pt').input_values
+            logits = model(ip_v).logits
+            predicted_ids = torch.argmax(logits, dim=-1)
+            spresults = tokenizer.decode(predicted_ids[0])
         return render(request, "home/notes.html", {"data": True, "result": spresults, "summary": False})
 
 def index(request):
@@ -165,8 +157,8 @@ def summarize(request):
     return render(request, "home/summarize.html", {"data": False, "summary": False})
 
 def loadSummary(request):
-    if request.method == "GET":
-        txtFS = request.GET['txtarea']
+    if request.method == "POST":
+        txtFS = request.POST['txtarea']
         context = {
             "content": generateSummary(txtFS),
             "data": True,
@@ -181,8 +173,8 @@ def notes(request):
     return render(request, "home/notes.html", {"data": False, "notes": False})
 
 def loadNotes(request):
-    if request.method == "GET":
-        txtFS = request.GET['txtarea']
+    if request.method == "POST":
+        txtFS = request.POST['txtarea']
         context = {
             "content": generateNotes(txtFS),
             "data": True,

@@ -13,7 +13,7 @@ Summarize text
 
             <h3>Summarize your text here!</h3>
 
-            <form action="{% url 'loadSummary' %}" method="GET">
+            <form action="{% url 'loadSummary' %}" method="POST">
                 {% csrf_token %}
                 <div class="form-group m-3">
                     <label for="txt">Text to be summarized - </label>
