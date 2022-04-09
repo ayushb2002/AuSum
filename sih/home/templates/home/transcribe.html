@@ -7,10 +7,22 @@ Transcribe
 
 
 {% block body %}
-<form action="/transcribe" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <p>File<br></p>
-    <input type="file" name="file" id="file" /><br>
-    <input type="submit" />
-</form>
+<div class="d-flex flex-row">
+    {% if form %}
+        <div class="d-flex flex-column justify-content-evenly align-items-center">
+            <form action="/transcribe" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
+                <input type="submit" value="Transcribe" />
+            </form>
+        </div>
+    {% endif %}
+    {% if result %}
+        <div class="d-flex flex-column">
+            <p>{{ result }}</p>
+        </div>
+    {% endif %}
+</div>
 {% endblock body %}

@@ -6,14 +6,20 @@ from google.cloud import speech
 
 from dotenv import load_dotenv
 
+from .forms import UploadForm
+
 load_dotenv("../../")
 
 def transcribe(request):
     if (request.method != "POST"):
-        return render(request, "home/transcribe.html")
+        uploadForm = UploadForm()
+        return render(request, "home/transcribe.html", {"form": uploadForm})
     else:
         client = speech.SpeechClient()
-        file = request.FILES['file']
+        form = UploadForm(request.POST, request.FILES)
+        if (not form.is_valid()):
+            return render(request, "home/error.html", {"form": form})
+        file = form.files['file']
         if (file):
             fs = FileSystemStorage()
             filename = fs.save(file.name, file)
@@ -32,7 +38,7 @@ def transcribe(request):
             spresults = ""
             for result in response.results:
                 spresults+=result.alternatives[0].transcript
-        return render(request, "home/success.html", {"result": spresults})
+        return render(request, "home/transcribe.html", {"result": spresults})
 
 def index(request):
     return render(request, "home/index.html")
