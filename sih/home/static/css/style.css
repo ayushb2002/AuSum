@@ -1,11 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik+Moonrocks&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Grape+Nuts&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
 *{
     margin: 0;
     padding: 0;
 }
-
+body
+{
+    max-width: 100%;
+    overflow-x: hidden;
+}
 .mainHead
 {
   background-image: url("../img/p3.jpg");
@@ -45,7 +50,6 @@
 .NAV
 {
     text-align: right;
-    padding-left: 1.5em;
     font-weight:500;
     color: white;
 
@@ -53,7 +57,9 @@
 
 .NAV2
 {
-    padding-left: 70em;
+    width: 100%;
+    display: flex;
+    justify-content: end;
 }
 
 .navBg
@@ -62,4 +68,82 @@
     background: linear-gradient(90deg, rgba(249,224,126,1) 0%, rgba(249,231,159,1) 50%, rgba(255,246,211,1) 100%);
     padding: 0;
     margin: 0;
+}
+
+.hd1
+{
+    color: black;
+    background-color: #F9E79F;
+    font-size: 1.75rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight:600;
+    text-align: center;
+    border-top-right-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+    height: 3rem;
+    padding-top: 0.25rem;
+
+}
+.hd2
+{
+    color: black;
+    background-color: #F9E79F;
+    font-size: 1.75rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight:600;
+    text-align: center;
+    border-top-left-radius: 2rem;
+    border-bottom-left-radius: 2rem;
+    height: 3rem;
+    padding-top: 0.25rem;
+
+}
+
+.con1
+{
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.footerStyle
+{
+    background-color: black;
+    height: 8rem;
+}
+.f1
+{
+    color: white;
+}
+
+.box
+{
+    height: 12rem;
+    border-radius: 1rem;
+    background-color: #F4D03F;
+    text-align: center;
+ 
+}
+.box:hover
+{
+    height: 12rem;
+    border-radius: 1rem;
+    background-color: #F7DC6F ;
+    text-align: center;
+
+}
+
+.boxHead
+{
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding-top: 1.5rem;
+
+}
+
+.con2
+{
+    margin: 2rem;
+    
 }
