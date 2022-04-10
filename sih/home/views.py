@@ -18,6 +18,11 @@ import librosa
 import torch
 from transformers import Wav2Vec2ForCTC, Wav2Vec2Tokenizer
 
+from django.conf import settings
+
+from asgiref.sync import sync_to_async
+
+@sync_to_async
 def generateSummary(para, n=5):
   sent_list = nltk.sent_tokenize(para)
   if n>len(sent_list)/2:
@@ -62,6 +67,7 @@ def generateSummary(para, n=5):
   summary = ' '.join(summary_sentences)
   return summary
 
+@sync_to_async
 def generateNotes(para, n=3):
   sent_list = nltk.sent_tokenize(para)
 
@@ -126,28 +132,33 @@ def generateNotes(para, n=3):
 
   return notes_sentences
 
-def transcribe(request):
+@sync_to_async
+def transcribeFile(filename, fs):
+    tokenizer = Wav2Vec2Tokenizer.from_pretrained('facebook/wav2vec2-base-960h')
+    model = Wav2Vec2ForCTC.from_pretrained('facebook/wav2vec2-base-960h')
+    file_url = fs.url(filename)
+    speech,rate = librosa.load(str(settings.BASE_DIR)+file_url,sr=16000)
+    
+    ip_v = tokenizer(speech, return_tensors='pt').input_values
+    logits = model(ip_v).logits
+    predicted_ids = torch.argmax(logits, dim=-1)
+    spresults = tokenizer.decode(predicted_ids[0])
+    return spresults
+
+async def transcribe(request):
     if (request.method != "POST"):
         uploadForm = UploadForm()
         return render(request, "home/transcribe.html", {"form": uploadForm})
     else:
-        tokenizer = Wav2Vec2Tokenizer.from_pretrained('facebook/wav2vec2-base-960h')
-        model = Wav2Vec2ForCTC.from_pretrained('facebook/wav2vec2-base-960h')
+        
         form = UploadForm(request.POST, request.FILES)
         if (not form.is_valid()):
             return render(request, "home/error.html", {"form": form})
         file = form.files['file']
         if (file):
             fs = FileSystemStorage()
-            filename = fs.save(file.name, file)
-            file_url = fs.url(filename)
-            audioFile = None
-            speech,rate = librosa.load("D:\\FullStackDevelopment\\sih_aiml\\sih"+file_url,sr=16000)
-            
-            ip_v = tokenizer(speech, return_tensors='pt').input_values
-            logits = model(ip_v).logits
-            predicted_ids = torch.argmax(logits, dim=-1)
-            spresults = tokenizer.decode(predicted_ids[0])
+            filename = fs.save(str(settings.BASE_DIR)+"/media/"+file.name, file)
+            spresults = await transcribeFile(filename, fs)
         return render(request, "home/notes.html", {"data": True, "result": spresults, "summary": False})
 
 def index(request):
@@ -156,13 +167,13 @@ def index(request):
 def summarize(request):
     return render(request, "home/summarize.html", {"data": False, "summary": False})
 
-def loadSummary(request):
+async def loadSummary(request):
     if request.method == "POST":
         txtFS = request.POST['txtarea']
         context = {
-            "content": generateSummary(txtFS),
+            "content": await generateSummary(txtFS, 10),
             "data": True,
-            "result": txtFS, 
+            "result": txtFS,    
             "summary": True
         }
         return render(request, "home/summarize.html", context)
@@ -172,11 +183,11 @@ def loadSummary(request):
 def notes(request):
     return render(request, "home/notes.html", {"data": False, "notes": False})
 
-def loadNotes(request):
+async def loadNotes(request):
     if request.method == "POST":
         txtFS = request.POST['txtarea']
         context = {
-            "content": generateNotes(txtFS),
+            "content": await generateNotes(txtFS, 10),
             "data": True,
             "result": txtFS, 
             "notes": True
