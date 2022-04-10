@@ -5,7 +5,6 @@ from django.core.files.storage import FileSystemStorage
 
 from .forms import UploadForm
 
-import os
 import nltk
 import nltk.corpus
 from nltk.tokenize import word_tokenize, sent_tokenize
@@ -24,9 +23,9 @@ from asgiref.sync import sync_to_async
 
 @sync_to_async
 def generateSummary(para, n=5):
-  sent_list = nltk.sent_tokenize(para)
-  if n>len(sent_list)/2:
-    return "Summary cannot be greater in length than half of provided data!"
+  sent_list = nltk.sent_tokenize(str(para))
+  if n > (len(sent_list)/2):
+    return ["Summary cannot be greater in length than half of provided data!"]
   post_punctuation = [] 
   punctuation = re.compile(r'[-.?!,:;()|0-9]')
   for sentences in sent_list:
@@ -72,7 +71,7 @@ def generateNotes(para, n=3):
   sent_list = nltk.sent_tokenize(para)
 
   if n>len(sent_list)/2:
-      return "Summary cannot be greater in length than half of provided data!"
+      return ["Notes cannot be greater in length than half of provided data!"]
 
   post_punctuation = [] 
   punctuation = re.compile(r'[-.?!,:;()|0-9]')
@@ -86,7 +85,6 @@ def generateNotes(para, n=3):
 
   formatted_str = ' '.join([str(pp) for pp in post_punctuation])
   stopwords = nltk.corpus.stopwords.words('english')
-
   word_frequencies = {}
   for word in nltk.word_tokenize(formatted_str):
       if word not in stopwords:
@@ -170,8 +168,11 @@ def summarize(request):
 async def loadSummary(request):
     if request.method == "POST":
         txtFS = request.POST['txtarea']
+        n = int(request.POST['n'])
+        if not n:
+            n = 5
         context = {
-            "content": await generateSummary(txtFS, 10),
+            "content": await generateSummary(txtFS, n),
             "data": True,
             "result": txtFS,    
             "summary": True
@@ -186,8 +187,11 @@ def notes(request):
 async def loadNotes(request):
     if request.method == "POST":
         txtFS = request.POST['txtarea']
+        n = int(request.POST['n'])
+        if not n:
+            n = 3
         context = {
-            "content": await generateNotes(txtFS, 10),
+            "content": await generateNotes(txtFS, n),
             "data": True,
             "result": txtFS, 
             "notes": True

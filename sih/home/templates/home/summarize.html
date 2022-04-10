@@ -9,7 +9,7 @@ Summarize text
 {% block body %}
 <div class="container-fluid">
     <div class="row">
-        <div class="col-6 py-3 px-5">
+        <div class="col-lg-6 col-sm-12 py-3 px-5">
 
             <h3>Summarize your text here!</h3>
 
@@ -17,18 +17,21 @@ Summarize text
                 {% csrf_token %}
                 <div class="form-group m-3">
                     <label for="txt">Text to be summarized - </label>
-                    <textarea name="txtarea" class="txtForSummary form-control" required>
+                    <textarea name="txtarea" class="txtForSummary form-control" placeholder="Your text goes here..." required>
                         {% if data %}
                             {{result}}
                         {% endif %}
                     </textarea>
                 </div>
                 <div class="form-group m-3">
+                    <input type="number" min="1" max="10" class="form-control" name="n" required placeholder="Enter number of lines required...">
+                </div>
+                <div class="form-group m-3">
                     <button class="btn btn-outline-warning" type="submit" >Summarize</button>
                 </div>
             </form>
         </div>
-        <div class="col-6 py-3 px-5">
+        <div class="col-lg-6 col-sm-12 py-3 px-5">
 
             <h3 class="mb-5">Summarized text goes here!</h3>
             {% if summary %}

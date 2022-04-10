@@ -9,7 +9,7 @@ Generate Notes
 {% block body %}
 <div class="container-fluid">
     <div class="row">
-        <div class="col-6 py-3 px-5">
+        <div class="col-lg-6 col-sm-12 py-3 px-5">
 
             <h3>Text goes here!</h3>
 
@@ -17,18 +17,21 @@ Generate Notes
                 {% csrf_token %}
                 <div class="form-group m-3">
                     <label for="txt">Text for notes generation - </label>
-                    <textarea name="txtarea" class="txtForSummary form-control" required>
+                    <textarea name="txtarea" class="txtForSummary form-control" placeholder="Enter text for notes generation..." required>
                         {% if data %}
                             {{result}}
                         {% endif %}
                     </textarea>
                 </div>
                 <div class="form-group m-3">
+                    <input type="number" min="1" max="10" name="n" placeholder="Enter number of lines required..." class="form-control" required>
+                </div>
+                <div class="form-group m-3">
                     <button class="btn btn-outline-warning" type="submit" >Generate Notes</button>
                 </div>
             </form>
         </div>
-        <div class="col-6 py-3 px-5">
+        <div class="col-lg-6 col-sm-12 py-3 px-5">
 
             <h3 class="mb-5">Notes generated here!</h3>
             {% if notes %}
